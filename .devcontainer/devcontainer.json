@@ -1,0 +1,31 @@
+{
+    "name": "Go 1.24 (Ubuntu 22.04)",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "go.useLanguageServer": true,
+                "go.toolsManagement.autoUpdate": true,
+                "go.lintTool": "golangci-lint",
+                "go.lintFlags": ["run"]
+            }
+        }
+    },
+    "remoteUser": "vscode",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace",
+    "updateRemoteUserUID": true,
+    "runArgs": [
+        "--security-opt",
+        "label=disable",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock"
+    ],
+    "postCreateCommand": "go mod download"
+}
